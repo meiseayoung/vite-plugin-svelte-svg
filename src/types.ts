@@ -34,4 +34,7 @@ export interface SvgProps extends Omit<HTMLAttributes<HTMLElement>, 'color'> {
 
 export type SvgModule = () => Promise<{ default: string }>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type SvgGlobResult = Record<string, () => Promise<any>>
+
 export type SvgRegistry = Record<string, SvgModule>

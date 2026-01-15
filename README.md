@@ -1,4 +1,4 @@
-# vite-plugin-svelte-svg
+# vite-plugin-for-svelte-svg
 
 Vite plugin for SVG handling in Svelte 5 projects with dynamic color and size support.
 
@@ -13,7 +13,7 @@ Vite plugin for SVG handling in Svelte 5 projects with dynamic color and size su
 ## Installation
 
 ```bash
-pnpm add vite-plugin-svelte-svg
+pnpm add vite-plugin-for-svelte-svg
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ pnpm add vite-plugin-svelte-svg
 // vite.config.ts
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
-import svelteSvg from 'vite-plugin-svelte-svg'
+import svelteSvg from 'vite-plugin-for-svelte-svg'
 
 export default defineConfig({
   plugins: [
