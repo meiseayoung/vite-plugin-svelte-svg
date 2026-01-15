@@ -30,7 +30,7 @@ export default defineConfig({
   plugins: [
     svelteSvg({
       dir: 'src/svg',
-      typesOutput: 'src/type/svg.d.ts'
+      output: 'src/svg/index.ts'
     }),
     svelte()
   ]
@@ -41,7 +41,7 @@ export default defineConfig({
 
 ```svelte
 <script lang="ts">
-  import { Svg } from '@/type/svg'  // Auto-generated with typed name prop
+  import { Svg } from './svg'  // Auto-generated with typed name prop
 </script>
 
 <!-- Basic usage -->
@@ -72,7 +72,7 @@ export default defineConfig({
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `dir` | `string` | `'src/svg'` | SVG files directory |
-| `typesOutput` | `string` | `'src/type/svg.d.ts'` | TypeScript types output path |
+| `output` | `string` | `'src/svg/index.ts'` | Generated module output path |
 | `generateTypes` | `boolean` | `true` | Whether to generate types |
 
 ### Svg Component Props
@@ -87,7 +87,7 @@ export default defineConfig({
 
 ### Generated File
 
-The plugin generates a single `svg.ts` file containing:
+The plugin generates a single `index.ts` file containing:
 
 ```ts
 export type SvgName = 'icon1' | 'icon2' | ...  // Union of all SVG names
@@ -97,7 +97,7 @@ export const Svg: Component<SvgProps>           // Typed Svg component
 
 ## How It Works
 
-1. **Build/Dev start**: Plugin scans SVG directory and generates `svg.ts` with typed `Svg` component
+1. **Build/Dev start**: Plugin scans SVG directory and generates `index.ts` with typed `Svg` component
 2. **Dev time**: Watches for SVG file changes and regenerates with HMR
 3. **Runtime**: SVGs are loaded as base64 data URLs via `import.meta.glob`, then parsed and modified in the browser
 

@@ -6,7 +6,7 @@ import type { PluginOptions } from './types'
 
 export type { PluginOptions, SvgProps, SvgColor, SvgBase64, NumberWithUnit, SvgGlobResult } from './types'
 
-function generateSvgTypes(svgDir: string, outputPath: string, root: string) {
+function generateSvgModule(svgDir: string, outputPath: string, root: string) {
   const fullSvgDir = resolve(root, svgDir)
   const fullOutputPath = resolve(root, outputPath)
   
@@ -24,7 +24,6 @@ function generateSvgTypes(svgDir: string, outputPath: string, root: string) {
   // Calculate relative path from output to svg dir
   const outputDir = dirname(fullOutputPath)
   const relativeSvgDir = resolve(root, svgDir).replace(/\\/g, '/')
-  const relativeOutputDir = outputDir.replace(/\\/g, '/')
   
   // Calculate relative import path
   let importPath = relativeSvgDir.replace(root.replace(/\\/g, '/'), '')
@@ -56,16 +55,14 @@ export const Svg = BaseSvg as Component<SvgProps>
     mkdirSync(outputDir, { recursive: true })
   }
 
-  // Use .ts extension instead of .d.ts
-  const tsOutputPath = fullOutputPath.replace('.d.ts', '.ts')
-  writeFileSync(tsOutputPath, moduleContent)
-  console.log(`[vite-plugin-for-svelte-svg] Generated: ${outputPath.replace('.d.ts', '.ts')}`)
+  writeFileSync(fullOutputPath, moduleContent)
+  console.log(`[vite-plugin-for-svelte-svg] Generated: ${outputPath}`)
 }
 
 export default function svelteSvgPlugin(options: PluginOptions = {}): Plugin {
   const {
     dir = 'src/svg',
-    typesOutput = 'src/types/svg.d.ts',
+    output = 'src/svg/index.ts',
     generateTypes = true
   } = options
 
@@ -80,7 +77,7 @@ export default function svelteSvgPlugin(options: PluginOptions = {}): Plugin {
 
     buildStart() {
       if (generateTypes) {
-        generateSvgTypes(dir, typesOutput, root)
+        generateSvgModule(dir, output, root)
       }
     },
 
@@ -92,7 +89,7 @@ export default function svelteSvgPlugin(options: PluginOptions = {}): Plugin {
       server.watcher.add(fullSvgDir)
       
       const handleChange = () => {
-        generateSvgTypes(dir, typesOutput, root)
+        generateSvgModule(dir, output, root)
         server.ws.send({ type: 'full-reload' })
       }
 

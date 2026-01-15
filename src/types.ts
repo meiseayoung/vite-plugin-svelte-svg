@@ -8,10 +8,10 @@ export interface PluginOptions {
   dir?: string
 
   /**
-   * Output path for generated TypeScript types
-   * @default 'src/types/svg.d.ts'
+   * Output path for generated TypeScript module
+   * @default 'src/svg/index.ts'
    */
-  typesOutput?: string
+  output?: string
 
   /**
    * Whether to generate types on startup
